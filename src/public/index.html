@@ -9,6 +9,8 @@
 <body>
     <div class="container">
         <h1>Address Validator</h1>
+        <p class="intro">Enter a US address below and click "Validate" to test the address validation API.</p>
+        <p class="note"><strong>Note:</strong> Authentication is disabled for this demo. In production, you would provide a JWT token.</p>
         <form id="addressForm">
             <div class="field">
                 <label for="addressLine1">Address Line 1:</label>
@@ -94,9 +96,9 @@
                 <span id="zipTooltip" class="tooltip"></span>
             </div>
 
-            <button type="submit">Validate</button>
+            <button type="submit">Validate Address</button>
         </form>
-        <div id="response" class="response"></div>
+        <div id="response" class="response" style="display:none;"></div>
     </div>
     <script>
         // zip input enforcement and tooltip
@@ -113,6 +115,7 @@
 
         document.getElementById('addressForm').addEventListener('submit', function(event) {
             event.preventDefault();
+            const responseDiv = document.getElementById('response');
             const addressLine1 = document.getElementById('addressLine1').value.trim();
             const addressLine2 = document.getElementById('addressLine2').value.trim();
             const city = document.getElementById('city').value.trim();
@@ -144,9 +147,17 @@
                 errors.push('Zip code must be exactly 5 digits.');
             }
             if (errors.length) {
-                document.getElementById('response').innerText = errors.join('\n');
+                responseDiv.className = 'response error';
+                responseDiv.innerHTML = '<strong>Validation Errors:</strong><ul>' + 
+                    errors.map(e => '<li>' + e + '</li>').join('') + '</ul>';
+                responseDiv.style.display = 'block';
                 return;
             }
+
+            // Show loading state
+            responseDiv.className = 'response loading';
+            responseDiv.textContent = 'Validating address...';
+            responseDiv.style.display = 'block';
 
             fetch('/validate-address', {
                 method: 'POST',
@@ -157,10 +168,15 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+                responseDiv.className = 'response success';
+                responseDiv.innerHTML = '<strong>Validation Result:</strong><pre>' + 
+                    JSON.stringify(data, null, 2) + '</pre>';
+                responseDiv.style.display = 'block';
             })
             .catch(error => {
-                document.getElementById('response').innerText = 'Error: ' + error.message;
+                responseDiv.className = 'response error';
+                responseDiv.innerHTML = '<strong>Error:</strong> <p>' + error.message + '</p>';
+                responseDiv.style.display = 'block';
             });
         });
     </script>

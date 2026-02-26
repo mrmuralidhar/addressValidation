@@ -9,6 +9,22 @@ h1 {
     color: #333;
 }
 
+/* Intro and note text */
+.intro {
+    color: #666;
+    margin-bottom: 10px;
+    font-size: 0.95em;
+}
+
+.note {
+    background: #e7f3ff;
+    border-left: 4px solid #2196F3;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 3px;
+    color: #0c5aa0;
+}
+
 form {
     background: #fff;
     padding: 20px;
@@ -83,6 +99,32 @@ button:hover {
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.response.success {
+    border-left: 4px solid #28a745;
+    background: #f0f9f0;
+}
+
+.response.error {
+    border-left: 4px solid #dc3545;
+    background: #fff5f5;
+    color: #721c24;
+}
+
+.response.error ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.response.error li {
+    margin: 5px 0;
+}
+
+.response.loading {
+    border-left: 4px solid #ffc107;
+    background: #fffef0;
+    color: #856404;
 }
 
 .response pre {
