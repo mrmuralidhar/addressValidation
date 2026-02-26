@@ -1,70 +1,64 @@
-# Node Address Validator
+# Node Address Validator (Beginner-friendly)
 
-This project is a simple Node.js application that allows users to enter an address, which is then sent to a REST endpoint for validation. The response is displayed in a formatted way on the web page.
+This repository is a small Node.js web application that demonstrates:
 
-## Project Structure
+- A minimal Express server (`src/app.js`)
+- Routes and middleware (`src/routes` and `src/middleware`)
+- A simple controller that validates an address (`src/controllers`)
 
+If you're learning Node.js, this project is structured to be easy to read and run locally.
+
+## Quick Start
+
+1. Install Node.js (v14+) and npm.
+2. Clone the repo and install dependencies:
+
+```bash
+git clone https://github.com/mrmuralidhar/addressValidation.git
+cd my-node-address-validator
+npm install
 ```
-my-node-address-validator
-├── src
-│   ├── app.js               # Entry point of the application
-│   ├── routes
-│   │   └── index.js         # Route definitions
-│   └── public
-│       ├── index.html        # HTML structure for the user interface
-│       └── css
-│           └── style.css     # Styles for the HTML page
-├── package.json              # npm configuration file
-└── README.md                 # Project documentation
-```
 
-## Getting Started
+3. Start the app:
 
-### Prerequisites
-
-- Node.js (version 14 or higher)
-- npm (Node package manager)
-
-### Installation
-
-1. Clone the repository:
-
-   ```
-   git clone <repository-url>
-   ```
-
-2. Navigate to the project directory:
-
-   ```
-   cd my-node-address-validator
-   ```
-
-3. Install the dependencies:
-
-   ```
-   npm install
-   ```
-
-### Running the Application
-
-To start the application, run the following command:
-
-```
+```bash
 npm start
 ```
 
-The application will be available at `http://localhost:3000`.
+4. Open `http://localhost:3000` in your browser.
 
-### Usage
+## Useful environment variables
 
-1. Open your web browser and go to `http://localhost:3000`.
-2. Enter an address in the provided form and submit it.
-3. The application will send the address to the REST endpoint for validation and display the response in a formatted manner.
+- `DISABLE_AUTH=true` — disable JWT verification for local development (default: off).
+- `JWT_SECRET` — secret used to verify tokens (only relevant if auth is enabled).
+- `VALIDATION_API_URL` — if set, the app will forward validation requests to this URL; otherwise a mocked response is returned (helpful for learning without external services).
 
-### Contributing
+Example (development run without auth):
 
-If you would like to contribute to this project, please fork the repository and submit a pull request with your changes.
+```bash
+DISABLE_AUTH=true npm start
+```
 
-### License
+## How it works (high level)
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+- `src/app.js` sets up Express and static file serving.
+- `src/routes/index.js` defines the `POST /validate-address` endpoint.
+- `src/middleware/auth.js` contains a small `verifyToken` middleware (which can be disabled).
+- `src/controllers/validateAddress.js` handles input checks and either returns a mock result or forwards the request to a real validation API.
+
+## Try it via curl
+
+Local mock validation (auth disabled):
+
+```bash
+DISABLE_AUTH=true \
+  curl -X POST http://localhost:3000/validate-address \
+    -H "Content-Type: application/json" \
+    -d '{"addressLine1":"123 Main St","city":"Anytown","state":"CA","zip":"12345"}'
+```
+
+## Next steps / learning suggestions
+
+- Add form validation in the frontend (`src/public/index.html`).
+- Replace the mock with a real validator by setting `VALIDATION_API_URL`.
+- Implement proper authentication with an OAuth provider.
