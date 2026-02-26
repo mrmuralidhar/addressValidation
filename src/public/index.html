@@ -8,107 +8,145 @@
 </head>
 <body>
     <div class="container">
-        <h1>Address Validator</h1>
-        <p class="intro">Enter a US address below and click "Validate" to test the address validation API.</p>
-        <p class="note"><strong>Note:</strong> Authentication is disabled for this demo. In production, you would provide a JWT token.</p>
-        <form id="addressForm">
-            <div class="field">
-                <label for="addressLine1">Address Line 1:</label>
-                <input type="text" id="addressLine1" name="addressLine1" maxlength="100" required>
-            </div>
+        <div class="hero">
+            <h1>US Address Validator</h1>
+            <p class="subtitle">Validate US addresses in real-time</p>
+        </div>
 
-            <div class="field">
-                <label for="addressLine2">Address Line 2:</label>
-                <input type="text" id="addressLine2" name="addressLine2" maxlength="100">
-            </div>
+        <div class="demo-section">
+            <p class="intro">Try the address validation API:</p>
 
-            <div class="field">
-                <label for="city">City:</label>
-                <input type="text" id="city" name="city" maxlength="50" required>
-            </div>
+            <form id="addressForm" class="demo-form">
+                <div class="form-row">
+                    <div class="field">
+                        <label for="addressLine1">Street Address Line 1 *</label>
+                        <input type="text" id="addressLine1" name="addressLine1" placeholder="e.g., 1600 Amphitheatre Parkway" maxlength="100" required>
+                    </div>
+                </div>
 
-            <div class="field">
-                <label for="state">State:</label>
-                <input list="states" type="text" id="state" name="state" maxlength="20" required>
-            </div>
-            <datalist id="states">
-                <option value="Alabama">
-                <option value="Alaska">
-                <option value="Arizona">
-                <option value="Arkansas">
-                <option value="California">
-                <option value="Colorado">
-                <option value="Connecticut">
-                <option value="Delaware">
-                <option value="District of Columbia">
-                <option value="Florida">
-                <option value="Georgia">
-                <option value="Hawaii">
-                <option value="Idaho">
-                <option value="Illinois">
-                <option value="Indiana">
-                <option value="Iowa">
-                <option value="Kansas">
-                <option value="Kentucky">
-                <option value="Louisiana">
-                <option value="Maine">
-                <option value="Maryland">
-                <option value="Massachusetts">
-                <option value="Michigan">
-                <option value="Minnesota">
-                <option value="Mississippi">
-                <option value="Missouri">
-                <option value="Montana">
-                <option value="Nebraska">
-                <option value="Nevada">
-                <option value="New Hampshire">
-                <option value="New Jersey">
-                <option value="New Mexico">
-                <option value="New York">
-                <option value="North Carolina">
-                <option value="North Dakota">
-                <option value="Ohio">
-                <option value="Oklahoma">
-                <option value="Oregon">
-                <option value="Pennsylvania">
-                <option value="Rhode Island">
-                <option value="South Carolina">
-                <option value="South Dakota">
-                <option value="Tennessee">
-                <option value="Texas">
-                <option value="Utah">
-                <option value="Vermont">
-                <option value="Virginia">
-                <option value="Washington">
-                <option value="West Virginia">
-                <option value="Wisconsin">
-                <option value="Wyoming">
-                <option value="American Samoa">
-                <option value="Guam">
-                <option value="Northern Mariana Islands">
-                <option value="Puerto Rico">
-                <option value="U.S. Virgin Islands">
-            </datalist>
+                <div class="form-row">
+                    <div class="field">
+                        <label for="addressLine2">Street Address Line 2</label>
+                        <input type="text" id="addressLine2" name="addressLine2" placeholder="e.g., Suite 100 (optional)" maxlength="100">
+                    </div>
+                </div>
 
-            <div class="field">
-                <label for="zip">Zip Code:</label>
-                <input type="text" id="zip" name="zip" maxlength="5" pattern="\d{5}" required>
-                <span id="zipTooltip" class="tooltip"></span>
-            </div>
+                <div class="form-row two-col">
+                    <div class="field">
+                        <label for="city">City *</label>
+                        <input type="text" id="city" name="city" placeholder="e.g., Mountain View" maxlength="50" required>
+                    </div>
+                    <div class="field">
+                        <label for="state">State *</label>
+                        <input list="states" type="text" id="state" name="state" placeholder="CA" maxlength="20" required>
+                        <datalist id="states">
+                            <option value="Alabama">
+                            <option value="Alaska">
+                            <option value="Arizona">
+                            <option value="Arkansas">
+                            <option value="California">
+                            <option value="Colorado">
+                            <option value="Connecticut">
+                            <option value="Delaware">
+                            <option value="District of Columbia">
+                            <option value="Florida">
+                            <option value="Georgia">
+                            <option value="Hawaii">
+                            <option value="Idaho">
+                            <option value="Illinois">
+                            <option value="Indiana">
+                            <option value="Iowa">
+                            <option value="Kansas">
+                            <option value="Kentucky">
+                            <option value="Louisiana">
+                            <option value="Maine">
+                            <option value="Maryland">
+                            <option value="Massachusetts">
+                            <option value="Michigan">
+                            <option value="Minnesota">
+                            <option value="Mississippi">
+                            <option value="Missouri">
+                            <option value="Montana">
+                            <option value="Nebraska">
+                            <option value="Nevada">
+                            <option value="New Hampshire">
+                            <option value="New Jersey">
+                            <option value="New Mexico">
+                            <option value="New York">
+                            <option value="North Carolina">
+                            <option value="North Dakota">
+                            <option value="Ohio">
+                            <option value="Oklahoma">
+                            <option value="Oregon">
+                            <option value="Pennsylvania">
+                            <option value="Rhode Island">
+                            <option value="South Carolina">
+                            <option value="South Dakota">
+                            <option value="Tennessee">
+                            <option value="Texas">
+                            <option value="Utah">
+                            <option value="Vermont">
+                            <option value="Virginia">
+                            <option value="Washington">
+                            <option value="West Virginia">
+                            <option value="Wisconsin">
+                            <option value="Wyoming">
+                            <option value="American Samoa">
+                            <option value="Guam">
+                            <option value="Northern Mariana Islands">
+                            <option value="Puerto Rico">
+                            <option value="U.S. Virgin Islands">
+                        </datalist>
+                    </div>
+                </div>
 
-            <button type="submit">Validate Address</button>
-        </form>
+                <div class="form-row">
+                    <div class="field">
+                        <label for="zip">ZIP Code *</label>
+                        <input type="text" id="zip" name="zip" placeholder="e.g., 94043" maxlength="5" pattern="\d{5}" required>
+                        <span id="zipTooltip" class="tooltip"></span>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn-primary">Validate Address</button>
+                    <button type="button" class="btn-sample" id="sampleBtn">Try Sample Address</button>
+                </div>
+            </form>
+        </div>
+
         <div id="response" class="response" style="display:none;"></div>
     </div>
     <script>
-        // zip input enforcement and tooltip
+        // Sample address data
+        const sampleAddress = {
+            addressLine1: '1600 Amphitheatre Parkway',
+            addressLine2: '',
+            city: 'Mountain View',
+            state: 'California',
+            zip: '94043'
+        };
+
+        // Populate form with sample address
+        document.getElementById('sampleBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('addressLine1').value = sampleAddress.addressLine1;
+            document.getElementById('addressLine2').value = sampleAddress.addressLine2;
+            document.getElementById('city').value = sampleAddress.city;
+            document.getElementById('state').value = sampleAddress.state;
+            document.getElementById('zip').value = sampleAddress.zip;
+        });
+
+        // ZIP input enforcement and tooltip
         const zipInput = document.getElementById('zip');
         const zipTooltip = document.getElementById('zipTooltip');
         zipInput.addEventListener('input', function() {
             if (/[^0-9]/.test(this.value)) {
                 zipTooltip.textContent = 'Please enter digits only';
+                zipTooltip.classList.add('show');
             } else {
                 zipTooltip.textContent = '';
+                zipTooltip.classList.remove('show');
             }
             this.value = this.value.replace(/[^0-9]/g, '');
         });
