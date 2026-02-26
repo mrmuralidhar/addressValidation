@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    color: #333;
+}
+
+form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* layout labels and inputs on one line */
+.field {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+.field label {
+    width: 150px;
+    margin-right: 10px;
+    text-align: right;
+}
+.field input {
+    flex: 1;
+    margin: 0;
+}
+
+/* prevent zip field from stretching */
+#zip {
+    flex: 0 0 auto;
+    width: 6em; /* tighter fit for 5 digits */
+}
+
+/* default full width for most inputs */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* override widths for specific fields */
+#city {
+    width: 60%;
+}
+#state {
+    width: 30%;
+}
+#zip {
+    width: 6em; /* tighter fit for 5 digits */
+}
+
+.tooltip {
+    color: red;
+    font-size: 0.9em;
+    margin-left: 10px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.response {
+    margin-top: 20px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.response pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

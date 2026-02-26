@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Validator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Address Validator</h1>
+        <form id="addressForm">
+            <div class="field">
+                <label for="addressLine1">Address Line 1:</label>
+                <input type="text" id="addressLine1" name="addressLine1" maxlength="100" required>
+            </div>
+
+            <div class="field">
+                <label for="addressLine2">Address Line 2:</label>
+                <input type="text" id="addressLine2" name="addressLine2" maxlength="100">
+            </div>
+
+            <div class="field">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" maxlength="50" required>
+            </div>
+
+            <div class="field">
+                <label for="state">State:</label>
+                <input list="states" type="text" id="state" name="state" maxlength="20" required>
+            </div>
+            <datalist id="states">
+                <option value="Alabama">
+                <option value="Alaska">
+                <option value="Arizona">
+                <option value="Arkansas">
+                <option value="California">
+                <option value="Colorado">
+                <option value="Connecticut">
+                <option value="Delaware">
+                <option value="District of Columbia">
+                <option value="Florida">
+                <option value="Georgia">
+                <option value="Hawaii">
+                <option value="Idaho">
+                <option value="Illinois">
+                <option value="Indiana">
+                <option value="Iowa">
+                <option value="Kansas">
+                <option value="Kentucky">
+                <option value="Louisiana">
+                <option value="Maine">
+                <option value="Maryland">
+                <option value="Massachusetts">
+                <option value="Michigan">
+                <option value="Minnesota">
+                <option value="Mississippi">
+                <option value="Missouri">
+                <option value="Montana">
+                <option value="Nebraska">
+                <option value="Nevada">
+                <option value="New Hampshire">
+                <option value="New Jersey">
+                <option value="New Mexico">
+                <option value="New York">
+                <option value="North Carolina">
+                <option value="North Dakota">
+                <option value="Ohio">
+                <option value="Oklahoma">
+                <option value="Oregon">
+                <option value="Pennsylvania">
+                <option value="Rhode Island">
+                <option value="South Carolina">
+                <option value="South Dakota">
+                <option value="Tennessee">
+                <option value="Texas">
+                <option value="Utah">
+                <option value="Vermont">
+                <option value="Virginia">
+                <option value="Washington">
+                <option value="West Virginia">
+                <option value="Wisconsin">
+                <option value="Wyoming">
+                <option value="American Samoa">
+                <option value="Guam">
+                <option value="Northern Mariana Islands">
+                <option value="Puerto Rico">
+                <option value="U.S. Virgin Islands">
+            </datalist>
+
+            <div class="field">
+                <label for="zip">Zip Code:</label>
+                <input type="text" id="zip" name="zip" maxlength="5" pattern="\d{5}" required>
+                <span id="zipTooltip" class="tooltip"></span>
+            </div>
+
+            <button type="submit">Validate</button>
+        </form>
+        <div id="response" class="response"></div>
+    </div>
+    <script>
+        // zip input enforcement and tooltip
+        const zipInput = document.getElementById('zip');
+        const zipTooltip = document.getElementById('zipTooltip');
+        zipInput.addEventListener('input', function() {
+            if (/[^0-9]/.test(this.value)) {
+                zipTooltip.textContent = 'Please enter digits only';
+            } else {
+                zipTooltip.textContent = '';
+            }
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        document.getElementById('addressForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const addressLine1 = document.getElementById('addressLine1').value.trim();
+            const addressLine2 = document.getElementById('addressLine2').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const state = document.getElementById('state').value.trim();
+            const zip = document.getElementById('zip').value.trim();
+
+            // client-side length validation
+            const errors = [];
+            if (addressLine1.length === 0 || addressLine1.length > 100) {
+                errors.push('Address Line 1 must be 1-100 characters.');
+            }
+            if (addressLine2.length > 100) {
+                errors.push('Address Line 2 cannot exceed 100 characters.');
+            }
+            if (city.length === 0 || city.length > 50) {
+                errors.push('City must be 1-50 characters.');
+            }
+            if (state.length === 0 || state.length > 20) {
+                errors.push('State must be 1-20 characters.');
+            }
+            // ensure state is one of allowed values
+            const allowedStates = [
+                'Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming','American Samoa','Guam','Northern Mariana Islands','Puerto Rico','U.S. Virgin Islands'
+            ];
+            if (state && !allowedStates.includes(state)) {
+                errors.push('Please select a valid state or territory from the list.');
+            }
+            if (!/^\d{5}$/.test(zip)) {
+                errors.push('Zip code must be exactly 5 digits.');
+            }
+            if (errors.length) {
+                document.getElementById('response').innerText = errors.join('\n');
+                return;
+            }
+
+            fetch('/validate-address', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ addressLine1, addressLine2, city, state, zip })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('response').innerText = 'Error: ' + error.message;
+            });
+        });
+    </script>
+</body>
+</html>

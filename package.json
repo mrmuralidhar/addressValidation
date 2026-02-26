@@ -1,0 +1,16 @@
+{
+  "name": "my-node-address-validator",
+  "version": "1.0.0",
+  "description": "A Node.js application to validate addresses via a REST endpoint.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^9.0.3"
+  },
+  "author": "",
+  "license": "ISC"
+}
